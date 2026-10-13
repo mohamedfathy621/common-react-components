@@ -2,6 +2,7 @@ import React from "react";
 
 interface MainContainerProps {
   children: React.ReactNode;
+  onClick?: () => void;
 }
 
 function MainContainer({ children }: MainContainerProps) {
