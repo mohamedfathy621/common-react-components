@@ -1,31 +1,30 @@
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import ContentContainer from "./content-container";
 import MainContainer from "./Main-Container";
 import SideMenu from "./side-menu/Side-Menu";
 import NavBar from "./nav-bar";
 import "react-datepicker/dist/react-datepicker.css";
 import CommonDialouge from "./common-dialouge";
-import CommonButton from "./common-button";
 import type { ITestingRequests } from "./Logic/interfaces/ITestingRequests";
 import DI from "./DI";
+import SearchBar from "./search-bar";
 
 function App() {
   const sendTestRequest: ITestingRequests = DI.resolve("ITestRequest");
   const [hideSideMenu, setHideSideMenu] = useState<boolean>(true);
   const [showDialouge, setShowDialouge] = useState<boolean>(false);
+  const [searchChoice, setSearchChoice] = useState<{
+    name: string;
+    id: string;
+  } | null>(null);
 
-  useEffect(() => {
-    async function loadUsers() {
-      try {
-        const response = await sendTestRequest.fetchUsers("moh");
-        console.log(response);
-      } catch {
-        console.log("sorry");
-      }
-    }
-
-    void loadUsers();
-  }, [sendTestRequest]);
+  const loadUsers = useCallback(
+    async (search: string): Promise<{ name: string; id: string }[]> => {
+      const response = await sendTestRequest.fetchUsers(search);
+      return response;
+    },
+    [sendTestRequest],
+  );
 
   return (
     <MainContainer>
@@ -75,14 +74,15 @@ function App() {
           setHideSideMenu={setHideSideMenu}
         ></NavBar>
         <div className="grid min-w-0 flex-1 h-full w-full  ">
-          <div className="row-start-1 col-start-1 h-300 z-10">
-            <CommonButton
-              type="primary"
-              onClick={() => setShowDialouge(true)}
-              size="basic"
-            >
-              Hello
-            </CommonButton>
+          <div className="row-start-1 col-start-1 h-300 z-10 p-8">
+            <div className="flex flex-col w-1/5 relative">
+              <SearchBar
+                searchFunction={loadUsers}
+                choice={searchChoice}
+                setChoice={setSearchChoice}
+                label="Test Search"
+              ></SearchBar>
+            </div>
           </div>
           <CommonDialouge
             showDialouge={showDialouge}

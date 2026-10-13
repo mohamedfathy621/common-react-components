@@ -6,19 +6,23 @@ interface BaseCommonInputFieldProps {
   label: string;
   placeHolder?: string;
   id: string;
+  icon?: string;
+  loading?: boolean;
+  locked?: boolean;
+  unlock?: () => void;
 }
 
 type CommonInputFieldProps = BaseCommonInputFieldProps &
   (
     | {
         type: "text" | "text-box";
-        value: string | null;
-        setValue: Dispatch<SetStateAction<string | null>>;
+        value: string;
+        setValue: Dispatch<SetStateAction<string>>;
       }
     | {
         type: "number";
-        value: number | null;
-        setValue: Dispatch<SetStateAction<number | null>>;
+        value: number;
+        setValue: Dispatch<SetStateAction<number>>;
       }
     | {
         type: "date";
@@ -27,8 +31,8 @@ type CommonInputFieldProps = BaseCommonInputFieldProps &
       }
     | {
         type: "check";
-        value: boolean | null;
-        setValue: Dispatch<SetStateAction<boolean | null>>;
+        value: boolean;
+        setValue: Dispatch<SetStateAction<boolean>>;
       }
   );
 function CommonInputField({
@@ -38,6 +42,10 @@ function CommonInputField({
   label,
   placeHolder,
   id,
+  icon,
+  loading,
+  locked,
+  unlock,
 }: CommonInputFieldProps) {
   const inputLabel = <label htmlFor={id}>{label}</label>;
 
@@ -107,12 +115,13 @@ function CommonInputField({
       type={type as "text" | "number"}
       placeholder={placeHolder}
       value={value as string | number}
+      disabled={locked}
       onChange={(e) =>
         (setValue as (value: React.SetStateAction<string | number>) => void)(
           e.target.value,
         )
       }
-      className="bg-white p-2 rounded-xl border-2 border-gray-300  outline-none focus-within:border-[#1E104E] transition-colors"
+      className={`w-full ${locked ? "bg-black/30 border-0" : "bg-white border-2"} p-2 rounded-xl  border-gray-300  outline-none focus-within:border-[#1E104E] transition-colors`}
     ></input>
   );
 
@@ -122,11 +131,28 @@ function CommonInputField({
     return (
       <div className="flex flex-col gap-4">
         {inputLabel}
-        {type === "date"
-          ? datePicker
-          : type === "text-box"
-            ? textBox
-            : plainInput}
+        <div className="relative inline-block w-full">
+          {type === "date"
+            ? datePicker
+            : type === "text-box"
+              ? textBox
+              : plainInput}
+
+          {loading && (
+            <div className="w-4 h-4 border-4 border-gray-300 border-t-[#1E104E] rounded-full animate-spin absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
+          )}
+          {icon && !loading && !locked && (
+            <i
+              className={`${icon} absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none`}
+            />
+          )}
+          {locked && (
+            <i
+              onClick={unlock}
+              className={`bx bx-x absolute text-2xl font-bold right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer`}
+            />
+          )}
+        </div>
       </div>
     );
   }
