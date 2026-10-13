@@ -2,6 +2,7 @@
 @import "tailwindcss";
 
 #root {
-  min-width: 100vw;
+  min-width: 100svh;
   min-height: 100vh;
+  overflow-x: hidden;
 }
