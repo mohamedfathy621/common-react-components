@@ -3,9 +3,11 @@ import ContentContainer from "./content-container";
 import MainContainer from "./Main-Container";
 import SideMenu from "./side-menu/Side-Menu";
 import NavBar from "./nav-bar";
+import "react-datepicker/dist/react-datepicker.css";
 
 function App() {
-  const [hideSideMenu, setHideSideMenu] = useState(true);
+  const [hideSideMenu, setHideSideMenu] = useState<boolean>(true);
+
   return (
     <MainContainer>
       <div className="hidden lg:flex">
@@ -51,6 +53,7 @@ function App() {
           hideSideMenu={hideSideMenu}
           setHideSideMenu={setHideSideMenu}
         ></NavBar>
+        <div className="p-8"></div>
       </ContentContainer>
     </MainContainer>
   );
