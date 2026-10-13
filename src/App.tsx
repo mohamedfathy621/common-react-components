@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ContentContainer from "./content-container";
 import MainContainer from "./Main-Container";
 import SideMenu from "./side-menu/Side-Menu";
@@ -6,10 +6,27 @@ import NavBar from "./nav-bar";
 import "react-datepicker/dist/react-datepicker.css";
 import CommonDialouge from "./common-dialouge";
 import CommonButton from "./common-button";
+import type { ITestingRequests } from "./Logic/interfaces/ITestingRequests";
+import DI from "./DI";
 
 function App() {
+  const sendTestRequest: ITestingRequests = DI.resolve("ITestRequest");
   const [hideSideMenu, setHideSideMenu] = useState<boolean>(true);
   const [showDialouge, setShowDialouge] = useState<boolean>(false);
+
+  useEffect(() => {
+    async function loadUsers() {
+      try {
+        const response = await sendTestRequest.fetchUsers("moh");
+        console.log(response);
+      } catch {
+        console.log("sorry");
+      }
+    }
+
+    void loadUsers();
+  }, [sendTestRequest]);
+
   return (
     <MainContainer>
       <div className="hidden lg:flex lg:w-82">
