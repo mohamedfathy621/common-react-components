@@ -5,7 +5,6 @@ import SideMenu from "./side-menu/Side-Menu";
 import NavBar from "./nav-bar/nav-bar";
 import "react-datepicker/dist/react-datepicker.css";
 import CommonDialouge from "./common-components/common-dialouge";
-import "./index.css";
 
 function App() {
   const [hideSideMenu, setHideSideMenu] = useState<boolean>(true);
