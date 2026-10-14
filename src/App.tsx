@@ -1,30 +1,15 @@
-import { useCallback, useState } from "react";
-import ContentContainer from "./content-container";
-import MainContainer from "./Main-Container";
+import { useState } from "react";
+import ContentContainer from "./containers/content-container";
+import MainContainer from "./containers/Main-Container";
 import SideMenu from "./side-menu/Side-Menu";
-import NavBar from "./nav-bar";
+import NavBar from "./nav-bar/nav-bar";
 import "react-datepicker/dist/react-datepicker.css";
-import CommonDialouge from "./common-dialouge";
-import type { ITestingRequests } from "./Logic/interfaces/ITestingRequests";
-import DI from "./DI";
-import SearchBar from "./search-bar";
+import CommonDialouge from "./common-components/common-dialouge";
+import LoadingSpinner from "./common-components/Loading-Spinner";
 
 function App() {
-  const sendTestRequest: ITestingRequests = DI.resolve("ITestRequest");
   const [hideSideMenu, setHideSideMenu] = useState<boolean>(true);
   const [showDialouge, setShowDialouge] = useState<boolean>(false);
-  const [searchChoice, setSearchChoice] = useState<{
-    name: string;
-    id: string;
-  } | null>(null);
-
-  const loadUsers = useCallback(
-    async (search: string): Promise<{ name: string; id: string }[]> => {
-      const response = await sendTestRequest.fetchUsers(search);
-      return response;
-    },
-    [sendTestRequest],
-  );
 
   return (
     <MainContainer>
@@ -75,14 +60,7 @@ function App() {
         ></NavBar>
         <div className="grid min-w-0 flex-1 h-full w-full  ">
           <div className="row-start-1 col-start-1 h-300 z-10 p-8">
-            <div className="flex flex-col w-1/5 relative">
-              <SearchBar
-                searchFunction={loadUsers}
-                choice={searchChoice}
-                setChoice={setSearchChoice}
-                label="Test Search"
-              ></SearchBar>
-            </div>
+            <LoadingSpinner></LoadingSpinner>
           </div>
           <CommonDialouge
             showDialouge={showDialouge}
