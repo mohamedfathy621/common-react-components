@@ -27,7 +27,7 @@ function CommonDialouge({
   };
   return (
     <div
-      className={`row-start-1 col-start-1 ${showDialouge ? "bg-black/40 z-10" : "bg-transparent z-0"}  bg-black/40 flex z-0`}
+      className={`row-start-1 col-start-1 ${showDialouge ? "bg-black/40 z-10" : "bg-transparent z-0"}  bg-black/40 flex z-0 h-[calc(100vh-68px)]`}
     >
       <AnimatePresence>
         {showDialouge && (
