@@ -5,7 +5,7 @@ import SideMenu from "./side-menu/Side-Menu";
 import NavBar from "./nav-bar/nav-bar";
 import "react-datepicker/dist/react-datepicker.css";
 import CommonDialouge from "./common-components/common-dialouge";
-import LoadingSpinner from "./common-components/Loading-Spinner";
+import "./index.css";
 
 function App() {
   const [hideSideMenu, setHideSideMenu] = useState<boolean>(true);
@@ -59,9 +59,7 @@ function App() {
           setHideSideMenu={setHideSideMenu}
         ></NavBar>
         <div className="grid min-w-0 flex-1 h-full w-full  ">
-          <div className="row-start-1 col-start-1 h-300 z-10 p-8">
-            <LoadingSpinner></LoadingSpinner>
-          </div>
+          <div className="row-start-1 col-start-1 h-300 z-10 p-8"></div>
           <CommonDialouge
             showDialouge={showDialouge}
             closeDialouge={() => setShowDialouge(false)}
