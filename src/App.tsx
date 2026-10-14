@@ -5,6 +5,7 @@ import SideMenu from "./side-menu/Side-Menu";
 import NavBar from "./nav-bar/nav-bar";
 import "react-datepicker/dist/react-datepicker.css";
 import CommonDialouge from "./common-components/common-dialouge";
+import NotificationContainer from "./containers/notification-container";
 
 function App() {
   const [hideSideMenu, setHideSideMenu] = useState<boolean>(true);
@@ -53,6 +54,11 @@ function App() {
           setHideSideMenu(true);
         }}
       >
+        <NotificationContainer right={true} top={true}>
+          <div className="w-50 h-30 border border-slate-300 bg-white rounded-xl"></div>
+          <div className="w-50 h-30 border border-slate-300 bg-white rounded-xl"></div>
+        </NotificationContainer>
+
         <NavBar
           hideSideMenu={hideSideMenu}
           setHideSideMenu={setHideSideMenu}

@@ -13,7 +13,7 @@ function ContentContainer({
 }: ContentContainerProps) {
   return (
     <div
-      className={`w-full h-full min-h-screen  ${dimTheLights ? "bg-black/50 lg:bg-linear-to-b from-[#F8FAFC] to-[#EFF6FF]" : " bg-linear-to-b from-[#F8FAFC] to-[#EFF6FF]"}`}
+      className={`w-full h-full min-h-screen   ${dimTheLights ? "bg-black/50 lg:bg-linear-to-b from-[#F8FAFC] to-[#EFF6FF]" : " bg-linear-to-b from-[#F8FAFC] to-[#EFF6FF]"}`}
       onClick={onClick}
     >
       {children}
